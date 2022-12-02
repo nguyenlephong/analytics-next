@@ -17,6 +17,7 @@
     "@types/analytics-node": "^3.1.9",
     "@types/autocannon": "^7",
     "@types/express": "^4",
+    "@types/node": "14",
     "analytics-node": "^6.2.0",
     "autocannon": "^7.10.0",
     "express": "^4.17.1",

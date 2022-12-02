@@ -1209,6 +1209,7 @@ __metadata:
     "@types/analytics-node": ^3.1.9
     "@types/autocannon": ^7
     "@types/express": ^4
+    "@types/node": 14
     analytics-node: ^6.2.0
     autocannon: ^7.10.0
     express: ^4.17.1
@@ -3722,6 +3723,13 @@ __metadata:
   version: 14.6.3
   resolution: "@types/node@npm:14.6.3"
   checksum: d03126925a9cc0861c4510d8b0be99fca342e59e0aac496437903feae7fe5ee674ae5a86f1ed4e562f688d25dbf337b971f0df090279f74b7bd1c7320ac931b3
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:14":
+  version: 14.18.34
+  resolution: "@types/node@npm:14.18.34"
+  checksum: 25ac3b456a0b7b82c76b37276ec86845849e8276fc81d1470a87227c105c619e299aa7165b6148aa11a4ea156b1452f6d3327935f3e7dc0067ff54dde0e3d4e0
   languageName: node
   linkType: hard
 
