@@ -7,10 +7,13 @@ process.env.NODE_ENV = 'production'
 
 const { getBatchEventsTotal, getRequestTotal } = nockRequests()
 
-const onServerClose = (server: Server, closedCb?: Function) => {
+const onServerClose = (
+  server: Server,
+  onCloseCb?: ServerOptions['onClose']
+) => {
   server.close(async () => {
     console.log('Server closing...')
-    await closedCb?.()
+    await onCloseCb?.()
     const totalBatchEvents = getBatchEventsTotal()
     const totalApiRequests = getRequestTotal()
     const averagePerBatch = totalApiRequests
@@ -27,8 +30,12 @@ const onServerClose = (server: Server, closedCb?: Function) => {
 
 const PORT = 3000
 
+type ServerOptions = {
+  onClose?: () => void | Promise<void>
+}
+
 export const startServer = (
-  onCloseCb?: Function
+  options: ServerOptions = {}
 ): Promise<express.Application> => {
   return new Promise((resolve) => {
     const app = express()
@@ -37,7 +44,7 @@ export const startServer = (
       resolve(app)
     })
     ;['SIGINT', 'SIGTERM'].forEach((signal) => {
-      process.on(signal, () => onServerClose(server, onCloseCb))
+      process.on(signal, () => onServerClose(server, options.onClose))
     })
   })
 }

@@ -8,7 +8,7 @@ const analytics = new Analytics({
   maxEventsInBatch: 15,
 })
 
-startServer(() => analytics.closeAndFlush())
+startServer({ onClose: analytics.closeAndFlush })
   .then((app) => {
     app.get('/', (_, res) => {
       analytics.track(trackEventSmall)
