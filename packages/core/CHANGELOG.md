@@ -1,5 +1,12 @@
 # @segment/analytics-core
 
+## 1.2.0
+
+### Minor Changes
+
+- [#722](https://github.com/segmentio/analytics-next/pull/722) [`61688e2`](https://github.com/segmentio/analytics-next/commit/61688e251ad2f60dae4cfd65cf59401c29ec66bd) Thanks [@silesky](https://github.com/silesky)! - Improve core interfaces. Refactor analytics-next to use shared EventQueue, dispatch, and other methods.
+  Augment Browser interface with traits and context options type.
+
 ## 1.1.6
 
 ### Patch Changes

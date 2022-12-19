@@ -1,5 +1,19 @@
 # @segment/analytics-next
 
+## 1.49.0
+
+### Minor Changes
+
+- [#722](https://github.com/segmentio/analytics-next/pull/722) [`61688e2`](https://github.com/segmentio/analytics-next/commit/61688e251ad2f60dae4cfd65cf59401c29ec66bd) Thanks [@silesky](https://github.com/silesky)! - Improve core interfaces. Refactor analytics-next to use shared EventQueue, dispatch, and other methods.
+  Augment Browser interface with traits and context options type.
+
+### Patch Changes
+
+- [#730](https://github.com/segmentio/analytics-next/pull/730) [`a392bf9`](https://github.com/segmentio/analytics-next/commit/a392bf9ef60cf4a6e6edef0b7c038e993b18b1bd) Thanks [@pooyaj](https://github.com/pooyaj)! - Adding jsdocs for universal storage
+
+- Updated dependencies [[`61688e2`](https://github.com/segmentio/analytics-next/commit/61688e251ad2f60dae4cfd65cf59401c29ec66bd)]:
+  - @segment/analytics-core@1.2.0
+
 ## 1.48.0
 
 ### Minor Changes
