@@ -74,6 +74,7 @@ export function segmentio(
 
   const apiHost = settings?.apiHost ?? SEGMENT_API_HOST
   const protocol = settings?.protocol ?? 'https'
+  // const protocol = settings?.protocol ?? 'http'
   const remote = `${protocol}://${apiHost}`
 
   const deliveryStrategy = settings?.deliveryStrategy

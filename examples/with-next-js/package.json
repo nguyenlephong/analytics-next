@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "concurrently": "yarn run -T concurrently",
-    "dev": "yarn partytown && yarn concurrently 'yarn run -T watch --filter=with-next-js' 'sleep 10 && next dev'",
+    "dev": "yarn partytown && yarn concurrently 'yarn run -T watch --filter=with-next-js' 'sleep 10 && next dev -p 3001'",
     "build": "yarn partytown && next build",
     "partytown": "partytown copylib public/~partytown",
-    "start": "next start",
+    "start": "next start -p 3001",
     "lint": "next lint"
   },
   "dependencies": {
