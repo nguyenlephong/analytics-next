@@ -61,7 +61,7 @@ describe('Batching', () => {
   it('does not send requests right away', async () => {
     const { dispatch } = batch(`https://api.segment.io`)
 
-    await dispatch(`https://api.segment.io/v1/t`, {
+    await dispatch(`https://webapp-demo.primedatacdp.com/api/sdk/t`, {
       hello: 'world',
     })
 
@@ -73,17 +73,17 @@ describe('Batching', () => {
       size: 3,
     })
 
-    await dispatch(`https://api.segment.io/v1/t`, {
+    await dispatch(`https://webapp-demo.primedatacdp.com/api/sdk/t`, {
       event: 'first',
     })
     expect(fetch).not.toHaveBeenCalled()
 
-    await dispatch(`https://api.segment.io/v1/t`, {
+    await dispatch(`https://webapp-demo.primedatacdp.com/api/sdk/t`, {
       event: 'second',
     })
     expect(fetch).not.toHaveBeenCalled()
 
-    await dispatch(`https://api.segment.io/v1/t`, {
+    await dispatch(`https://webapp-demo.primedatacdp.com/api/sdk/t`, {
       event: 'third',
     })
 
@@ -110,7 +110,7 @@ describe('Batching', () => {
 
     // fatEvent is about ~1kb in size
     for (let i = 0; i < 250; i++) {
-      await dispatch(`https://api.segment.io/v1/t`, {
+      await dispatch(`https://webapp-demo.primedatacdp.com/api/sdk/t`, {
         event: 'fat event',
         properties: fatEvent,
       })
@@ -118,7 +118,7 @@ describe('Batching', () => {
     expect(fetch).not.toHaveBeenCalled()
 
     for (let i = 0; i < 250; i++) {
-      await dispatch(`https://api.segment.io/v1/t`, {
+      await dispatch(`https://webapp-demo.primedatacdp.com/api/sdk/t`, {
         event: 'fat event',
         properties: fatEvent,
       })
@@ -134,12 +134,12 @@ describe('Batching', () => {
       timeout: 10000, // 10 seconds
     })
 
-    await dispatch(`https://api.segment.io/v1/t`, {
+    await dispatch(`https://webapp-demo.primedatacdp.com/api/sdk/t`, {
       event: 'first',
     })
     expect(fetch).not.toHaveBeenCalled()
 
-    await dispatch(`https://api.segment.io/v1/i`, {
+    await dispatch(`https://webapp-demo.primedatacdp.com/api/sdk/i`, {
       event: 'second',
     })
 
@@ -167,13 +167,13 @@ describe('Batching', () => {
       timeout: 10000, // 10 seconds
     })
 
-    await dispatch(`https://api.segment.io/v1/t`, {
+    await dispatch(`https://webapp-demo.primedatacdp.com/api/sdk/t`, {
       event: 'first',
     })
 
     jest.advanceTimersByTime(11000) // 11 seconds
 
-    await dispatch(`https://api.segment.io/v1/i`, {
+    await dispatch(`https://webapp-demo.primedatacdp.com/api/sdk/i`, {
       event: 'second',
     })
 
@@ -214,11 +214,11 @@ describe('Batching', () => {
     it('flushes the batch', async () => {
       const { dispatch } = batch(`https://api.segment.io`)
 
-      dispatch(`https://api.segment.io/v1/t`, {
+      dispatch(`https://webapp-demo.primedatacdp.com/api/sdk/t`, {
         hello: 'world',
       }).catch(console.error)
 
-      dispatch(`https://api.segment.io/v1/t`, {
+      dispatch(`https://webapp-demo.primedatacdp.com/api/sdk/t`, {
         bye: 'world',
       }).catch(console.error)
 
@@ -230,7 +230,7 @@ describe('Batching', () => {
 
       // any dispatch attempts after the page has unloaded are flushed immediately
       // this can happen if analytics.track is called right before page is navigated away
-      dispatch(`https://api.segment.io/v1/t`, {
+      dispatch(`https://webapp-demo.primedatacdp.com/api/sdk/t`, {
         afterlife: 'world',
       }).catch(console.error)
 
@@ -245,7 +245,7 @@ describe('Batching', () => {
 
       // fatEvent is about ~1kb in size
       for (let i = 0; i < 80; i++) {
-        await dispatch(`https://api.segment.io/v1/t`, {
+        await dispatch(`https://webapp-demo.primedatacdp.com/api/sdk/t`, {
           event: 'fat event',
           properties: fatEvent,
         })
