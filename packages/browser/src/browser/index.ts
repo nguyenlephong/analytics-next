@@ -13,7 +13,7 @@ import { pageEnrichment } from '../plugins/page-enrichment'
 import { remoteLoader, RemotePlugin } from '../plugins/remote-loader'
 import type { RoutingRule } from '../plugins/routing-middleware'
 import { segmentio, SegmentioSettings } from '../plugins/segmentio'
-import { primedatavn, PrimeDataVNSettings } from '../plugins/primedatavn'
+// import { primedatavn, PrimeDataVNSettings } from '../plugins/primedatavn'
 import { validation } from '../plugins/validation'
 import {
   AnalyticsBuffered,
@@ -235,19 +235,19 @@ async function registerPlugins(
   }
 
   // TODO using primedatavn plugin
-  const shouldIgnorePrimeDataVN =
-    (opts.integrations?.All === false && !opts.integrations['PrimeDataVN']) ||
-    (opts.integrations && opts.integrations['PrimeDataVN'] === false)
-
-  if (!shouldIgnorePrimeDataVN) {
-    toRegister.push(
-      primedatavn(
-        analytics,
-        mergedSettings['PrimeDataVN'] as PrimeDataVNSettings,
-        legacySettings.integrations
-      )
-    )
-  }
+  // const shouldIgnorePrimeDataVN =
+  //   (opts.integrations?.All === false && !opts.integrations['PrimeDataVN']) ||
+  //   (opts.integrations && opts.integrations['PrimeDataVN'] === false)
+  //
+  // if (!shouldIgnorePrimeDataVN) {
+  //   toRegister.push(
+  //     primedatavn(
+  //       analytics,
+  //       mergedSettings['PrimeDataVN'] as PrimeDataVNSettings,
+  //       legacySettings.integrations
+  //     )
+  //   )
+  // }
 
   const ctx = await analytics.register(...toRegister)
 
