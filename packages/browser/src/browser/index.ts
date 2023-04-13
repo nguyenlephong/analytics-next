@@ -12,7 +12,8 @@ import { createDeferred } from '../lib/create-deferred'
 import { pageEnrichment } from '../plugins/page-enrichment'
 import { remoteLoader, RemotePlugin } from '../plugins/remote-loader'
 import type { RoutingRule } from '../plugins/routing-middleware'
-import { segmentio, SegmentioSettings } from '../plugins/segmentio'
+// import { segmentio, SegmentioSettings } from '../plugins/segmentio'
+import { primedatavn, PrimeDataVNSettings } from '../plugins/primedatavn'
 import { validation } from '../plugins/validation'
 import {
   AnalyticsBuffered,
@@ -219,15 +220,30 @@ async function registerPlugins(
     toRegister.push(schemaFilter)
   }
 
-  const shouldIgnoreSegmentio =
-    (opts.integrations?.All === false && !opts.integrations['Segment.io']) ||
-    (opts.integrations && opts.integrations['Segment.io'] === false)
+  // const shouldIgnoreSegmentio =
+  //   (opts.integrations?.All === false && !opts.integrations['Segment.io']) ||
+  //   (opts.integrations && opts.integrations['Segment.io'] === false)
+  //
+  // if (!shouldIgnoreSegmentio) {
+  //   toRegister.push(
+  //     segmentio(
+  //       analytics,
+  //       mergedSettings['Segment.io'] as SegmentioSettings,
+  //       legacySettings.integrations
+  //     )
+  //   )
+  // }
 
-  if (!shouldIgnoreSegmentio) {
+  // TODO using primedatavn plugin
+  const shouldIgnorePrimeDataVN =
+    (opts.integrations?.All === false && !opts.integrations['PrimeDataVN']) ||
+    (opts.integrations && opts.integrations['PrimeDataVN'] === false)
+
+  if (!shouldIgnorePrimeDataVN) {
     toRegister.push(
-      segmentio(
+      primedatavn(
         analytics,
-        mergedSettings['Segment.io'] as SegmentioSettings,
+        mergedSettings['PrimeDataVN'] as PrimeDataVNSettings,
         legacySettings.integrations
       )
     )
