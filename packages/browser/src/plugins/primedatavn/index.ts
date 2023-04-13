@@ -12,6 +12,7 @@ import standard, { StandardDispatcherConfig } from './fetch-dispatcher'
 import { normalize } from './normalize'
 import { scheduleFlush } from './schedule-flush'
 import { PRIMEDATA_VN_API_HOST } from '../../core/constants'
+import { initOnsiteSDKNotUsingSharedWorker } from './modules/onsite'
 
 type DeliveryStrategy =
   | {
@@ -56,7 +57,8 @@ export function primedatavn(
   integrations?: LegacySettings['integrations']
 ): Plugin {
   // TODO primedatavn
-  console.log('log::59 primedatavn analytics.options', analytics.options)
+  console.log('log::60 primedatavn analytics.options', analytics.options)
+  console.log('log::61 primedatavn settings', settings)
 
   // Attach `pagehide` before buffer is created so that inflight events are added
   // to the buffer before the buffer persists events in its own `pagehide` handler.
@@ -136,6 +138,21 @@ export function primedatavn(
     page: send,
     alias: send,
     group: send,
+    onsite: function () {
+      return initOnsiteSDKNotUsingSharedWorker(
+        {
+          showLogs: true,
+          onsiteWorkerPath: '/posjs-worker.js',
+          endpoint: 'https://uat.primedatacdp.com',
+          source: 'JS-2LUc0ox23E3ys5oj4n9Dcu2Daot',
+          writeKey: '2LUc0qoFQMtl000aQoCn73gV9QU',
+          profileId: '2OMi4wIPzOkTcg2qEqVLYwXsgUK',
+          sessionId: '6f353b7b-dfd4-fc81-6daa-9f5117749919',
+          HOST: 'uat.primedatacdp.come/prile',
+        },
+        analytics
+      )
+    },
   }
 
   // Buffer may already have items if they were previously stored in localStorage.
@@ -144,5 +161,6 @@ export function primedatavn(
     scheduleFlush(flushing, buffer, primedata, scheduleFlush)
   }
 
+  if (analytics.options.webPopup && primedata.onsite) primedata.onsite()
   return primedata
 }

@@ -92,6 +92,7 @@ export interface InitOptions {
   integrations?: Integrations
   plan?: Plan
   retryQueue?: boolean
+  webPopup?: boolean
   obfuscate?: boolean
   /**
    * Disables or sets constraints on processing of query string parameters
