@@ -13,6 +13,7 @@ import { normalize } from './normalize'
 import { scheduleFlush } from './schedule-flush'
 import { PRIMEDATA_VN_API_HOST } from '../../core/constants'
 import { initOnsiteSDKNotUsingSharedWorker } from './modules/onsite'
+import { initFingerprint } from "./modules/fingerprint";
 
 type DeliveryStrategy =
   | {
@@ -56,10 +57,6 @@ export function primedatavn(
   settings?: PrimeDataVNSettings,
   integrations?: LegacySettings['integrations']
 ): Plugin {
-  // TODO primedatavn
-  console.log('log::60 primedatavn analytics.options', analytics.options)
-  console.log('log::61 primedatavn settings', settings)
-
   // Attach `pagehide` before buffer is created so that inflight events are added
   // to the buffer before the buffer persists events in its own `pagehide` handler.
   window.addEventListener('pagehide', () => {
@@ -78,7 +75,7 @@ export function primedatavn(
   const flushing = false
 
   const apiHost = settings?.apiHost ?? PRIMEDATA_VN_API_HOST
-  const protocol = settings?.protocol ?? 'https'
+  const protocol = 'http' //|| settings?.protocol ?? 'https'
   // const protocol = settings?.protocol ?? 'http'
   const remote = `${protocol}://${apiHost}`
 
@@ -138,21 +135,7 @@ export function primedatavn(
     page: send,
     alias: send,
     group: send,
-    onsite: function () {
-      return initOnsiteSDKNotUsingSharedWorker(
-        {
-          showLogs: true,
-          onsiteWorkerPath: '/posjs-worker.js',
-          endpoint: 'https://uat.primedatacdp.com',
-          source: 'JS-2LUc0ox23E3ys5oj4n9Dcu2Daot',
-          writeKey: '2LUc0qoFQMtl000aQoCn73gV9QU',
-          profileId: '2OMi4wIPzOkTcg2qEqVLYwXsgUK',
-          sessionId: '6f353b7b-dfd4-fc81-6daa-9f5117749919',
-          HOST: 'uat.primedatacdp.come/prile',
-        },
-        analytics
-      )
-    },
+    onsite: (opt: any) => initOnsiteSDKNotUsingSharedWorker(opt, analytics)
   }
 
   // Buffer may already have items if they were previously stored in localStorage.
@@ -160,7 +143,21 @@ export function primedatavn(
   if (buffer.todo) {
     scheduleFlush(flushing, buffer, primedata, scheduleFlush)
   }
+  const primeIntegrationOpt = integrations ? integrations["PrimeDataVN"] : {}
+  console.log('log::146 PrimeDataVN integrations:', primeIntegrationOpt)
+  if (primeIntegrationOpt.webPopup.enabled && primedata.onsite) primedata.onsite({
+    showLogs: true,
+    endpoint: 'https://uat.primedatacdp.com',
+    source: 'JS-2LUc0ox23E3ys5oj4n9Dcu2Daot',
+    writeKey: '2LUc0qoFQMtl000aQoCn73gV9QU',
+    profileId: '2LUfeOMCvZ6i9aBIW77WUwSZGHj',
+    sessionId: '6f353b7b-dfd4-fc81-6daa-9f5117749919',
+    HOST: 'uat.primedatacdp.come/prile',
+  })
 
-  if (analytics.options.webPopup && primedata.onsite) primedata.onsite()
+  if (primeIntegrationOpt.fingerprint.enabled) {
+    initFingerprint().then()
+  }
+
   return primedata
 }

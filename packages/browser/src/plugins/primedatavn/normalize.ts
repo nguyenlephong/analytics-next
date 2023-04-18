@@ -8,6 +8,7 @@ import { SegmentFacade } from '../../lib/to-facade'
 import { PrimeDataVNSettings } from './index'
 import { version } from '../../generated/version'
 import { getAvailableStorageOptions, UniversalStorage } from '../../core/user'
+import { getDeviceIdFromStorage, getDeviceInfoFromStorage } from "./modules/fingerprint";
 
 let cookieOptions: jar.CookieAttributes | undefined
 function getCookieOptions(): jar.CookieAttributes {
@@ -211,8 +212,27 @@ export function normalize(
       bundled: bundled.sort(),
       unbundled: unbundled.sort(),
       bundledIds: bundledConfigIds,
+
     }
   }
+
+  // Currently, only using version, visitorId and confidence field from fingerprint object
+  let deviceInfo = getDeviceInfoFromStorage();
+  //@ts-ignore
+  if(!deviceInfo) deviceInfo = window._primedata_fingerprint
+  if (deviceInfo) {
+    //@ts-ignore
+    json.device_id = getDeviceIdFromStorage() || deviceInfo.visitorId;
+    json.device_id_meta = {
+      //@ts-ignore
+      version: deviceInfo.version,
+      confidence: {
+        //@ts-ignore
+        score: deviceInfo.confidence?.score
+      }
+    };
+  }
+
 
   const amp = ampId()
   if (amp) {

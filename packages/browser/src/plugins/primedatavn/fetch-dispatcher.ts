@@ -14,9 +14,17 @@ export default function (config?: StandardDispatcherConfig): {
       url,
       body,
     })
+
     return fetch(url, {
       keepalive: config?.keepalive,
-      headers: { 'Content-Type': 'text/plain' },
+      headers: {
+        'Content-Type': 'text/plain',
+        'origin': "*",
+        'Access-Control-Allow-Origin': "*",
+        'credentials': 'include',
+        "X-Client-Id": "JS-2LUc0ox23E3ys5oj4n9Dcu2Daot",
+        "X-Client-Access-Token": "2LUc0qoFQMtl000aQoCn73gV9QU",
+      },
       method: 'post',
       body: JSON.stringify(body),
     })

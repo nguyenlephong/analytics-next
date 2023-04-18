@@ -4,7 +4,7 @@ import type { Analytics } from '../analytics'
 import type { Context } from '../context'
 
 export interface Plugin extends CorePlugin<Context, Analytics> {
-  onsite?: () => void
+  onsite?: (opt: any) => void
 }
 
 export interface DestinationPlugin extends Plugin {
